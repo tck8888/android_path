@@ -15,7 +15,7 @@ import kotlin.math.tan
  * @author tck
  *
  */
-class TriangleView : View {
+class TrapezoidView : View {
 
     private val paint: Paint
     private val path: Path
@@ -30,29 +30,20 @@ class TriangleView : View {
     ) {
         paint = Paint().apply {
             isAntiAlias = true
-            color = "#fffdeee9".toColorInt()
+            color = "#ffed5824".toColorInt()
         }
 
         path = Path()
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val with = MeasureSpec.getSize(widthMeasureSpec)
-
-        val tempHeight = tan(Math.toRadians(15.0)) * with
-        setMeasuredDimension(with, tempHeight.toInt())
-    }
-
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        path.reset()
         path.moveTo(0f, 0f)
-        path.lineTo(width.toFloat(), 0f)
         path.lineTo(0f, height.toFloat())
+        path.lineTo(width.toFloat(), (height.toFloat()-width/ tan(Math.toRadians(85.0))).toFloat())
+        path.lineTo(width.toFloat(), 0f)
         path.close()
-
         canvas?.drawPath(path, paint)
     }
 }
